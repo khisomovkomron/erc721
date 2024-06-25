@@ -27,9 +27,13 @@ contract NFToken {
         return _balanceOf[owner];
     }
 
-    function minting() public {}
+    function minting(address to, uint256 tokenId) public {
+        _mint(to, tokenId);
+    }
 
-    function burn() public {}
+    function burn(uint256 tokenId) public {
+        _update(address(0), tokenId);
+    }
 
     function transfer() public {}
 
