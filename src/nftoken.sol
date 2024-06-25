@@ -69,7 +69,7 @@ contract NFToken {
     }
 
     function _safeMint(address to, uint256 tokenId) private {
-        _mint(to, tokenId)
+        _mint(to, tokenId);
         // should be implemented _checkOnERC721Received
     }
 
