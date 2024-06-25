@@ -12,9 +12,14 @@ contract NFToken {
 
     // STATE VARIABLES
     mapping(address => uint256) private _balanceOf;
+    mapping(uint256 tokenId => address) private _owners;
 
+    string private _name; 
+    string private _symbol; 
 
-    constructor() {
+    constructor(string memory name_, string memory symbol_) {
+        _name = name_;
+        _symbol = symbol_;
 
     }
 
@@ -24,5 +29,44 @@ contract NFToken {
 
     function minting() public {}
 
+    function burn() public {}
+
     function transfer() public {}
+
+    function _update(address to, uint256 tokenId) public returns (address){ 
+        address from = _owners[tokenId];
+
+        // should check if from exists
+
+        // should add reverts for if conditions
+
+        if (from != address(0)) {
+            unchecked {
+                _balanceOf[from] -= 1;
+            }
+        }
+
+        if (to != address(0)) {
+            unchecked {
+                _balanceOf[to] += 1;
+            }
+        }
+
+        _owners[tokenId] = to;
+
+        return from;
+
+    }
+
+
+    function _mint(address to, uint256 tokenId) private {
+        _update(to, tokenId);
+        //check if address exist from previuous line
+    }
+
+    function _safeMint(address to, uint256 tokenId) private {
+        _mint(to, tokenId)
+        // should be implemented _checkOnERC721Received
+    }
+
 }
