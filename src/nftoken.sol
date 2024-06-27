@@ -23,6 +23,13 @@ contract NFToken {
 
     }
 
+    function name() public view returns(string memory){ 
+        return _name;
+    }
+    function symbol() public view returns(string memory) { 
+        return _symbol;
+    }
+
     function balanceOf(address owner) public view returns (uint256){
         return _balanceOf[owner];
     }

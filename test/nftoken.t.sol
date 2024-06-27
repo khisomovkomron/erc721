@@ -1,17 +1,23 @@
-// SPDX-License-Identifier: UNLICENSED
+// SPDX-License-Identifier: LICENSED
 pragma solidity ^0.8.20;
 
-import {Test, console} from "forge-std/Test.sol";
+import {Test} from "lib/forge-std/src/Test.sol";
+import {console} from "lib/forge-std/src/console.sol";
 import {NFToken} from "../src/nftoken.sol";
+import {DeployNFToken} from "../script/deploy_nftoken.s.sol";
 
 contract NFTokenTest is Test {
+    NFToken nftoken;
 
-    
-    function run() external returns(NFToken) {
-        vm.startBroadcast();
-        NFToken nftoken = new NFToken("Kom", "KKK");
+    function setUp() public {
+        DeployNFToken deploynftoken = new DeployNFToken();
 
-        vm.stopBroadcast();
-        return nftoken;
+        deploynftoken.run();
+    }
+
+    function testCorrectName() public view {
+        console.logString("Kom");
+        // console.log(nftoken.name);
+        assertEq(keccak256(abi.encodePacked(nftoken.name)), (keccak256(abi.encodePacked("Kom"))));
     }
 }

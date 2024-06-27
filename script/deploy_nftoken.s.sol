@@ -1,12 +1,16 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.20;
 
-import {Script, console} from "forge-std/Script.sol";
+import {Script} from "lib/forge-std/src/Script.sol";
+import {NFToken} from "../src/nftoken.sol";
 
 contract DeployNFToken is Script {
-    function setUp() public {}
+        
+    function run() external returns(NFToken) {
+        vm.startBroadcast();
+        NFToken nftoken = new NFToken("Kom", "KKK");
 
-    function run() public {
-        vm.broadcast();
+        vm.stopBroadcast();
+        return nftoken;
     }
 }
