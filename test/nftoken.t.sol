@@ -25,10 +25,12 @@ contract NFTokenTest is Test {
         assert(keccak256(abi.encodePacked(expectedName)) == keccak256(abi.encodePacked(actualName)));}
 
     function testCorrectSymbol() public view {
+        string memory expectedSymbol = "KKK";
         string memory actualSymbol = nftoken.symbol();
 
-
-        assert(keccak256(abi.encodePacked("KKK")) == keccak256(abi.encodePacked(actualSymbol)));}
+        console.log("Expected Name:", expectedSymbol);
+        console.log("Actual Name:", actualSymbol);
+        assert(keccak256(abi.encodePacked(expectedSymbol)) == keccak256(abi.encodePacked(actualSymbol)));}
 
     
 }
