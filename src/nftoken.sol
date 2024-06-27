@@ -14,8 +14,8 @@ contract NFToken {
     mapping(address => uint256) private _balanceOf;
     mapping(uint256 tokenId => address) private _owners;
 
-    string private _name; 
-    string private _symbol; 
+    string public _name; 
+    string public _symbol; 
 
     constructor(string memory name_, string memory symbol_) {
         _name = name_;

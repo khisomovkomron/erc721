@@ -12,12 +12,23 @@ contract NFTokenTest is Test {
     function setUp() public {
         DeployNFToken deploynftoken = new DeployNFToken();
 
-        deploynftoken.run();
+        nftoken = deploynftoken.run();
     }
 
     function testCorrectName() public view {
-        console.logString("Kom");
-        // console.log(nftoken.name);
-        assertEq(keccak256(abi.encodePacked(nftoken.name)), (keccak256(abi.encodePacked("Kom"))));
-    }
+        string memory expectedName = "Kom";
+        string memory actualName = nftoken.name();
+
+        console.log("Expected Name:", expectedName);
+        console.log("Actual Name:", actualName);
+
+        assert(keccak256(abi.encodePacked(expectedName)) == keccak256(abi.encodePacked(actualName)));}
+
+    function testCorrectSymbol() public view {
+        string memory actualSymbol = nftoken.symbol();
+
+
+        assert(keccak256(abi.encodePacked("KKK")) == keccak256(abi.encodePacked(actualSymbol)));}
+
+    
 }
