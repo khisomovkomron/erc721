@@ -8,7 +8,7 @@ contract DeployNFToken is Script {
         
     function run() external returns(NFToken) {
         vm.startBroadcast();
-        NFToken nftoken = new NFToken("Kom", "KKK");
+        NFToken nftoken = new NFToken("Kom", "KKK", msg.sender);
 
         vm.stopBroadcast();
         return nftoken;

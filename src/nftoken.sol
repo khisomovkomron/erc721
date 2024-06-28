@@ -5,24 +5,31 @@ pragma solidity ^0.8.20;
 import {ERC721} from "lib/openzeppelin-contracts/contracts/token/ERC721/erc721.sol";
 import {Ownable} from "lib/openzeppelin-contracts/contracts/access/Ownable.sol";
 
-contract NFToken is Ownable{
+contract NFToken{
     // ERRORS
     error InvalidReceiver(address to);
-    error IncorrectOwner(address from, address tokeId, address previsousOwner);
+    error IncorrectOwner(address from, uint256 tokeId, address previsousOwner);
     // EVENTS
 
     // STATE VARIABLES
     mapping(address => uint256) private _balanceOf;
     mapping(uint256 tokenId => address) private _owners;
     mapping(uint256 => string) private _tokenURIs;
+    address private owner;
 
     string public _name; 
     string public _symbol; 
 
-    constructor(string memory name_, string memory symbol_) {
+    constructor(string memory name_, string memory symbol_, address initialOwner) {
         _name = name_;
         _symbol = symbol_;
+        owner = initialOwner;
 
+    }
+
+    modifier onlyOwner() {
+        require(msg.sender == owner);
+        _;
     }
 
     function name() public view returns(string memory){ 
@@ -32,12 +39,12 @@ contract NFToken is Ownable{
         return _symbol;
     }
 
-    function balanceOf(address owner) public view returns (uint256){
-        return _balanceOf[owner];
+    function balanceOf(address _owner) public view returns (uint256){
+        return _balanceOf[_owner];
     }
 
-    function mint(address to, uint256 tokenId) public onlyOwner{
-        _mint(to, tokenId);
+    function mint(address to, uint256 tokenId, string memory tokenUri) public onlyOwner{
+        _mint(to, tokenId, tokenUri);
     }
 
     function burn(uint256 tokenId) public onlyOwner{
@@ -80,37 +87,39 @@ contract NFToken is Ownable{
     }
 
 
-    function _mint(address to, uint256 tokenId, tokenURI) private {
+    function _mint(address to, uint256 tokenId, string memory tokenURI) private {
         _update(to, tokenId);
         _setTokenUri(tokenId, tokenURI);
 
         //check if address exist from previuous line
     }
 
-    function _safeMint(address to, uint256 tokenId) private {
-        _mint(to, tokenId);
+    function _safeMint(address to, uint256 tokenId, string memory tokenURI) private {
+        _mint(to, tokenId, tokenURI);
         // should be implemented _checkOnERC721Received
     }
 
-    function _tokenURI(uint256 tokenId) private returns (string memory) {
-        string memory _tokenURI = _tokenURIs[tokenId];
+    function _tokenURI(uint256 tokenId) private view returns (string memory) {
+        string memory _tokenUri = _tokenURIs[tokenId];
         string memory base = _baseURI();
 
         if (bytes(base).length == 0) {
-            return _tokenURI;
+            return _tokenUri;
         }
 
-        if (bytes(_tokenURI).length == 0){
-            return string.concat(base, _tokenURI);
+        if (bytes(_tokenUri).length == 0){
+            return string.concat(base, _tokenUri);
         }
+
+        return _tokenUri;
 
     }
 
-    function _setTokenUri(uint256 tokenId, string memory _tokenURI) private {
-        _tokenURIs[tokenId] = _tokenURI;
+    function _setTokenUri(uint256 tokenId, string memory _tokenUri) private {
+        _tokenURIs[tokenId] = _tokenUri;
     } 
 
-    function _baseURI() private returns (string memory) {
+    function _baseURI() private pure returns (string memory) {
         return "";
     }
 
