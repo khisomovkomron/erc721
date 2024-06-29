@@ -9,6 +9,7 @@ contract NFToken{
     // ERRORS
     error InvalidReceiver(address to);
     error InvalidSender(address to);
+    error InvalidOwner(address to);
     error NonexistingToken(uint256 tokenId);
     error IncorrectOwner(address from, uint256 tokeId, address previsousOwner);
     // EVENTS
@@ -21,6 +22,16 @@ contract NFToken{
 
     string public _name; 
     string public _symbol; 
+
+    // Functions Order:
+    //// constructor
+    //// receive
+    //// fallback
+    //// external
+    //// public
+    //// internal
+    //// private
+    //// view / pure
 
     constructor(string memory name_, string memory symbol_, address initialOwner) {
         _name = name_;
@@ -42,24 +53,16 @@ contract NFToken{
     }
 
     function balanceOf(address _owner) public view returns (uint256){
+        if (_owner == address(0)){
+            revert InvalidOwner(address(0));
+        }
         return _balanceOf[_owner];
     }
 
+
+
     function mint(address to, uint256 tokenId, string memory tokenUri) public onlyOwner{
         _mint(to, tokenId, tokenUri);
-    }
-
-    function _mint(address to, uint256 tokenId, string memory tokenURI) private {
-        if (to == address(0)){
-            revert InvalidReceiver(address(0));
-        }
-        address previousOwner = _update(to, tokenId);
-        if (previousOwner != address(0)){
-            revert InvalidSender(address(0));
-        }
-        _setTokenUri(tokenId, tokenURI);
-
-        //check if address exist from previuous line
     }
 
     function burn(uint256 tokenId) public onlyOwner{
@@ -77,6 +80,26 @@ contract NFToken{
         if (previousOwner != from) {
             revert IncorrectOwner(from, tokenId, previousOwner);
         }
+    }
+
+    // TODO
+    // approve 
+    // getApproved
+    // setApprovalForAll
+    // isApprovedForAll
+    // safeTransferFrom
+
+    function _mint(address to, uint256 tokenId, string memory tokenURI) private {
+        if (to == address(0)){
+            revert InvalidReceiver(address(0));
+        }
+        address previousOwner = _update(to, tokenId);
+        if (previousOwner != address(0)){
+            revert InvalidSender(address(0));
+        }
+        _setTokenUri(tokenId, tokenURI);
+
+        //check if address exist from previuous line
     }
 
     function _update(address to, uint256 tokenId) public returns (address){ 

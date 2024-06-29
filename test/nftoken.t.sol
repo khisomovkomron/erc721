@@ -32,5 +32,24 @@ contract NFTokenTest is Test {
         console.log("Actual Name:", actualSymbol);
         assert(keccak256(abi.encodePacked(expectedSymbol)) == keccak256(abi.encodePacked(actualSymbol)));}
 
+    function testMintNFT() public {}
+
+    function testMintToZeroAddress() public {}
+
+    function testMintWithInvalidSender() public {}
+
+    function tesBurnNFT() public {}
+
+    function tesBurnFromInvalidSender() public {}
+
+    function testBalanceOf() public {}
+
+    function testBalanceOfInvalidOwner() public {}
+
+    function testTransferFrom() public {}
+
+    function testTransferFromToInvalidReceiver() public {}
+
+    function testTransferFromInvalidOwner() public {}
     
 }
