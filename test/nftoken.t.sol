@@ -51,5 +51,17 @@ contract NFTokenTest is Test {
     function testTransferFromToInvalidReceiver() public {}
 
     function testTransferFromInvalidOwner() public {}
+
+    // tests TODO
+    
+    function testApprove() public {}
+
+    function testgetApproved() public {}
+
+    function testsetApprovalForAll() public {}
+
+    function testisApprovedForAll() public {}
+    
+    function testsafeTransferFrom() public {}
     
 }
