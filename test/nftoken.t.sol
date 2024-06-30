@@ -72,11 +72,25 @@ contract NFTokenTest is Test {
 
     }
 
-    function testTransferFrom() public {}
+    function testTransferFrom() public {
+        nftoken.mint(OWNER, TOKEN_ID, TOKEN_URI);
+        nftoken.transferFrom(OWNER, USER, TOKEN_ID);
+        assertEq(nftoken.balanceOf(USER), 1);
 
-    function testTransferFromToInvalidReceiver() public {}
 
-    function testTransferFromInvalidOwner() public {}
+    }
+
+    function testTransferFromToInvalidReceiver() public {
+        nftoken.mint(OWNER, TOKEN_ID, TOKEN_URI);
+        vm.expectRevert();
+        nftoken.transferFrom(OWNER, address(0), TOKEN_ID);
+    }
+
+    function testTransferFromInvalidOwner() public {
+        nftoken.mint(OWNER, TOKEN_ID, TOKEN_URI);
+        vm.expectRevert();
+        nftoken.transferFrom(USER, USER, TOKEN_ID);
+    }
 
     // tests TODO
     
