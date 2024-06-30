@@ -64,3 +64,38 @@ $ forge --help
 $ anvil --help
 $ cast --help
 ```
+
+
+### FORGE COVERAGE
+Analysing contracts...
+Running tests...
+| File                        | % Lines        | % Statements   | % Branches     | % Funcs       |
+|-----------------------------|----------------|----------------|----------------|---------------|
+| script/deploy_nftoken.s.sol | 100.00% (4/4)  | 100.00% (5/5)  | 100.00% (0/0)  | 100.00% (1/1) |
+| src/nftoken.sol             | 76.32% (29/38) | 78.43% (40/51) | 75.00% (15/20) | 66.67% (8/12) |
+| Total                       | 78.57% (33/42) | 80.36% (45/56) | 75.00% (15/20) | 69.23% (9/13) |
+
+### TODO FUNCTIONS 
+
+
+    // TODO
+    // approve 
+    // getApproved
+    // setApprovalForAll
+    // isApprovedForAll
+    // safeTransferFrom
+
+### TODO TESTS
+
+
+    // tests TODO
+    
+    function testApprove() public {}
+
+    function testgetApproved() public {}
+
+    function testsetApprovalForAll() public {}
+
+    function testisApprovedForAll() public {}
+
+    function testsafeTransferFrom() public {}

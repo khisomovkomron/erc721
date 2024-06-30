@@ -76,8 +76,6 @@ contract NFTokenTest is Test {
         nftoken.mint(OWNER, TOKEN_ID, TOKEN_URI);
         nftoken.transferFrom(OWNER, USER, TOKEN_ID);
         assertEq(nftoken.balanceOf(USER), 1);
-
-
     }
 
     function testTransferFromToInvalidReceiver() public {
