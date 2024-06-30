@@ -61,9 +61,16 @@ contract NFTokenTest is Test {
 
     }
 
-    function testBalanceOf() public {}
+    function testBalanceOf() public {
+        nftoken.mint(USER, TOKEN_ID, TOKEN_URI);
+        assertEq(nftoken.balanceOf(USER), 1);
+    }
 
-    function testBalanceOfInvalidOwner() public {}
+    function testBalanceOfInvalidOwner() public {
+        vm.expectRevert();
+        nftoken.balanceOf(address(0));
+
+    }
 
     function testTransferFrom() public {}
 
