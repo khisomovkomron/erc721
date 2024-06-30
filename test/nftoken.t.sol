@@ -8,6 +8,10 @@ import {DeployNFToken} from "../script/deploy_nftoken.s.sol";
 
 contract NFTokenTest is Test {
     NFToken nftoken;
+    address OWNER = address(0x123);
+    address USER = address(0x456);
+    string public TOKEN_URI = "NEW_TOKEN_URI";
+    uint256 public TOKEN_ID = 0;
 
     function setUp() public {
         DeployNFToken deploynftoken = new DeployNFToken();
@@ -32,9 +36,17 @@ contract NFTokenTest is Test {
         console.log("Actual Name:", actualSymbol);
         assert(keccak256(abi.encodePacked(expectedSymbol)) == keccak256(abi.encodePacked(actualSymbol)));}
 
-    function testMintNFT() public {}
+    function testMintNFT() public {
+        nftoken.mint(USER, TOKEN_ID, TOKEN_URI);
+        assertEq(nftoken.balanceOf(USER), 1);
+    }
 
-    function testMintToZeroAddress() public {}
+    function testMintToZeroAddress() public {
+        vm.expectRevert();
+        nftoken.mint(address(0), TOKEN_ID, TOKEN_URI);
+        
+
+    }
 
     function testMintWithInvalidSender() public {}
 
@@ -61,7 +73,7 @@ contract NFTokenTest is Test {
     function testsetApprovalForAll() public {}
 
     function testisApprovedForAll() public {}
-    
+
     function testsafeTransferFrom() public {}
     
 }

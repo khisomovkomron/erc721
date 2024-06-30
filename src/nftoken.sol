@@ -61,8 +61,8 @@ contract NFToken{
 
 
 
-    function mint(address to, uint256 tokenId, string memory tokenUri) public onlyOwner{
-        _mint(to, tokenId, tokenUri);
+    function mint(address to, uint256 tokenId, string memory tokenUri) public onlyOwner returns (address){
+        return _mint(to, tokenId, tokenUri);
     }
 
     function burn(uint256 tokenId) public onlyOwner{
@@ -89,7 +89,7 @@ contract NFToken{
     // isApprovedForAll
     // safeTransferFrom
 
-    function _mint(address to, uint256 tokenId, string memory tokenURI) private {
+    function _mint(address to, uint256 tokenId, string memory tokenURI) private returns(address){
         if (to == address(0)){
             revert InvalidReceiver(address(0));
         }
@@ -97,17 +97,13 @@ contract NFToken{
         if (previousOwner != address(0)){
             revert InvalidSender(address(0));
         }
-        _setTokenUri(tokenId, tokenURI);
 
-        //check if address exist from previuous line
+        _setTokenUri(tokenId, tokenURI);
+        return previousOwner;
     }
 
     function _update(address to, uint256 tokenId) public returns (address){ 
         address from = _owners[tokenId];
-
-        // should check if from exists
-
-        // should add reverts for if conditions
 
         if (from != address(0)) {
             unchecked {
