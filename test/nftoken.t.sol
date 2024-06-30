@@ -10,7 +10,7 @@ contract NFTokenTest is Test {
     NFToken nftoken;
     address OWNER = address(0x123);
     address USER = address(0x456);
-    string public TOKEN_URI = "NEW_TOKEN_URI";
+    string public TOKEN_URI = "https://example.com/token/1";
     uint256 public TOKEN_ID = 0;
 
     function setUp() public {
@@ -44,11 +44,15 @@ contract NFTokenTest is Test {
     function testMintToZeroAddress() public {
         vm.expectRevert();
         nftoken.mint(address(0), TOKEN_ID, TOKEN_URI);
-        
-
     }
 
-    function testMintWithInvalidSender() public {}
+    function testMintWithInvalidSender() public {
+        nftoken.mint(USER,TOKEN_ID , TOKEN_URI);
+        vm.expectRevert();
+        nftoken.mint(OWNER, TOKEN_ID, TOKEN_URI);
+
+
+    }
 
     function tesBurnNFT() public {}
 
