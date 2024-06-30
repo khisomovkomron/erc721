@@ -12,6 +12,7 @@ contract NFTokenTest is Test {
     address USER = address(0x456);
     string public TOKEN_URI = "https://example.com/token/1";
     uint256 public TOKEN_ID = 0;
+    uint256 public TOKEN_ID2 = 1;
 
     function setUp() public {
         DeployNFToken deploynftoken = new DeployNFToken();
@@ -50,13 +51,15 @@ contract NFTokenTest is Test {
         nftoken.mint(USER,TOKEN_ID , TOKEN_URI);
         vm.expectRevert();
         nftoken.mint(OWNER, TOKEN_ID, TOKEN_URI);
-
-
     }
 
-    function tesBurnNFT() public {}
+    function testBurnNonexistentToken() public {
+        nftoken.mint(USER, TOKEN_ID , TOKEN_URI);
+        nftoken.mint(USER, TOKEN_ID2 , TOKEN_URI);
+        vm.expectRevert();
+        nftoken.burn(TOKEN_ID2);
 
-    function tesBurnFromInvalidSender() public {}
+    }
 
     function testBalanceOf() public {}
 
